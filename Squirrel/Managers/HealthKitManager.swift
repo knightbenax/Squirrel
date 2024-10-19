@@ -80,8 +80,8 @@ class HealthKitManager: ObservableObject {
             }
           
             DispatchQueue.main.async { [self] in
-                sleepData.start = startDate
-                sleepData.end = endDate
+                sleepData.start = results.first?.startDate
+                sleepData.end = results.last?.endDate
             }
             
             var totalSleepSeconds : TimeInterval = 0
@@ -128,34 +128,6 @@ class HealthKitManager: ObservableObject {
         }
         
         healthStore.execute(query)
-    }
-    
-    //https://stackoverflow.com/questions/63599928/duration-of-array-of-dateintevals-that-excludes-overlapping-times/63600255#63600255
-    //used to decouple interval timing for inBed analysis
-    func calculateSpentTime(for intervals: [DateInterval]) -> TimeInterval {
-        guard intervals.count > 1 else {
-            return intervals.first?.duration ?? 0
-        }
-        
-        let sorted = intervals.sorted { $0.start < $1.start }
-        
-        var total: TimeInterval = 0
-        var start = sorted[0].start
-        var end = sorted[0].end
-        
-        for i in 1..<sorted.count {
-            
-            if sorted[i].start > end {
-                total += end.timeIntervalSince(start)
-                start = sorted[i].start
-                end = sorted[i].end
-            } else if sorted[i].end > end {
-                end = sorted[i].end
-            }
-        }
-        
-        total += end.timeIntervalSince(start)
-        return total
     }
     
     

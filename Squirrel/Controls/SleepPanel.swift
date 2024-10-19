@@ -26,16 +26,36 @@ struct SleepPanel: View {
                     Spacer()
                 }
             }
-            VStack{
+            VStack(spacing: 16){
                 GeometryReader { reader in
                     Chart(sleepData.allSleep) {
-                            BarMark(
-                                xStart: .value("Start Time", $0.start ?? Date()),
-                                xEnd: .value("End Time", $0.end ?? Date()),
-                                y: .value("Job", $0.type.rawValue)
-                            )
+                        BarMark(
+                            xStart: .value("Start Time", $0.start ?? Date()),
+                            xEnd: .value("End Time", $0.end ?? Date()),
+                            y: .value("Job", $0.type.rawValue)
+                        )
+                        //.foregroundStyle(by: .value($0.type.rawValue, $0.type))
+                        .clipShape(RoundedRectangle(cornerRadius: 5))
+                    }.chartXScale(domain: [getDomainStart(), getDomainEnd()])
+                        .chartXAxis {
+                            //make the axis for only even hours spaced at 2hrs apart
+                            AxisMarks(values: .stride(by: .hour, count: 2)) { value in
+                                if let date = value.as(Date.self) {
+                                    let hour = Calendar.current.component(.hour, from: date)
+                                    if hour % 2 == 0 {
+                                        AxisValueLabel(format: .dateTime.hour())
+                                        AxisGridLine()
+                                        AxisTick()
+                                        let _ = print(hour)
+                                    } else {
+                                        AxisValueLabel(format: .dateTime.hour())
+                                        AxisGridLine()
+                                        AxisTick()
+                                    }
+                                }
+                            }
                         }
-                }.frame(height: sleepDataHeight)//.background(Color.red)
+                }.frame(height: sleepDataHeight)
                 HStack{
                     HStack(spacing: 4){
                         Image(systemName: "bed.double.fill").font(.system(size: 12)).offset(y: 1)
@@ -44,7 +64,7 @@ struct SleepPanel: View {
                     Spacer()
                     HStack(spacing: 4){
                         Image(systemName: "sun.max.fill").font(.system(size: 12)).offset(y: 1)
-                        Text(dateHelper.formatDateToTime(thisDate: sleepData.end ?? Date())).font(.custom(FontsManager.fontRegular, size: 12)) + Text(dateHelper.formatDateToAMPM(thisDate: sleepData.start ?? Date())).font(.custom(FontsManager.fontRegular, size: 12))
+                        Text(dateHelper.formatDateToTime(thisDate: sleepData.end ?? Date())).font(.custom(FontsManager.fontRegular, size: 12)) + Text(dateHelper.formatDateToAMPM(thisDate: sleepData.end ?? Date())).font(.custom(FontsManager.fontRegular, size: 12))
                     }
                 }
             }
@@ -52,10 +72,12 @@ struct SleepPanel: View {
         }.padding(.horizontal, 22).padding(.bottom, 10)
     }
     
-    private func normalizeSleepStageDateValueToGraph(endOrStateDate: Date, readerWidth: CGFloat) -> CGFloat {
-        let value = endOrStateDate.timeIntervalSince(sleepData.start ?? Date())
-        return (value/sleepData.totalSleepSeconds) * readerWidth
-        
+    private func getDomainStart() -> Date {
+        return Calendar.current.date(byAdding: .minute, value: -100, to: sleepData.start ?? Date()) ?? Date()
+    }
+    
+    private func getDomainEnd() -> Date {
+        return Calendar.current.date(byAdding: .hour, value: 1, to: sleepData.end ?? Date()) ?? Date()
     }
 }
 

@@ -23,6 +23,10 @@ struct ContentView: View {
                 TopBar(showSettings: $showSettings, reloadSleepData: loadSleepData)
                 if (!loadingSleepData) {
                     SleepPanel(sleepData: $healthKitManager.sleepData)
+                } else {
+                    Spacer()
+                    ProgressView()
+                    Spacer()
                 }
             }
             Spacer()
