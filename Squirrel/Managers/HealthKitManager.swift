@@ -30,6 +30,7 @@ class HealthKitManager: ObservableObject {
     @Published var bodyMassIndex : Double = 0.0
     @Published var sleepData : SleepData?
     @PublishedAppStorage("hasAskedForPermission") var hasAskedForPermission = false
+    @Published var permissionGranted = false
     
     
     func requestAuthorization(completion: @escaping (Bool) -> ()){
@@ -39,10 +40,7 @@ class HealthKitManager: ObservableObject {
             return
         }
         
-        healthStore.requestAuthorization(toShare: nil, read: reads, completion: { [self] success, error in
-            DispatchQueue.main.async {
-                self.hasAskedForPermission = true
-            }
+        healthStore.requestAuthorization(toShare: nil, read: reads, completion: { success, error in
             if (success){
                 completion(true)
             } else {

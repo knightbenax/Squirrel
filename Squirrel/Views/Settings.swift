@@ -62,7 +62,8 @@ struct Settings: View {
                 }.padding([.horizontal], 20).padding([.vertical], 24).padding(.bottom, 20)
             }
             
-        }.background(Color("MainBg").ignoresSafeArea()).onAppear{
+        }//.background(Color("MainBg").ignoresSafeArea())
+            .onAppear{
             initValues()
         }.confirmationDialog("Delete Workouts", isPresented: $showingConfirmation) {
             Button("Delete", role: .destructive) {  }

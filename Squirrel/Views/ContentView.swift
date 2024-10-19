@@ -10,7 +10,7 @@ import CoreData
 
 struct ContentView: View {
     @State var showSettings = false
-    @State var healthKitManager = HealthKitManager()
+    @ObservedObject var healthKitManager : HealthKitManager
     
     var body: some View {
         VStack{
@@ -31,15 +31,22 @@ struct ContentView: View {
     }
     
     func requestHealthPermissionsAndLoadData(){
-        healthKitManager.requestAuthorization(completion: {_ in
-            let calendar = Calendar.current
-            let endDate = Date()
-            let startDate = calendar.date(byAdding: .day, value: -1, to: endDate)!
-            healthKitManager.fetchSleepDataForDay(startDate: startDate, endDate: endDate)
+        healthKitManager.requestAuthorization(completion: { value in
+            if (value) {
+                print(value)
+                DispatchQueue.main.async {
+                    healthKitManager.hasAskedForPermission = true
+                }
+                print(healthKitManager.hasAskedForPermission)
+                let calendar = Calendar.current
+                let endDate = Date()
+                let startDate = calendar.date(byAdding: .day, value: -1, to: endDate)!
+                healthKitManager.fetchSleepDataForDay(startDate: startDate, endDate: endDate)
+            }
         })
     }
 }
 
 #Preview {
-    ContentView().environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
+    ContentView(healthKitManager: HealthKitManager()).environment(\.managedObjectContext, PersistenceController.preview.container.viewContext)
 }
