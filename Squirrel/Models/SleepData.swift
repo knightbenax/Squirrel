@@ -8,13 +8,16 @@
 import Foundation
 
 struct SleepData : Hashable {
+    
     var start : Date?
     var end : Date?
-    var sleepQuality : Int
-    var avgHeartRate : Int
-    var allStages : [SleepStage]
-    var sleepStages : [SleepStage]
-    var totalInBedDuration : Double
-    var awakeDuration : Double
-    var aSleepDuration : Double
+    
+    var remSleep: [SleepStage] = []
+    var deepSleep: [SleepStage] = []
+    var coreSleep: [SleepStage] = []
+    var awake : [SleepStage] = []
+    //this is the array containing all the stages
+    var allSleep: [SleepStage] = []
+    
+    var totalSleepSeconds: TimeInterval = 0
 }

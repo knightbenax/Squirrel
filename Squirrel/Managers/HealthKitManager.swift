@@ -28,10 +28,8 @@ class HealthKitManager: ObservableObject {
     @Published var weightInKilograms : Double = 0.0
     @Published var heightInMeters : Double = 0.0
     @Published var bodyMassIndex : Double = 0.0
-    @Published var sleepData : SleepData?
     @PublishedAppStorage("hasAskedForPermission") var hasAskedForPermission = false
-    @Published var permissionGranted = false
-    
+    @Published var sleepData = SleepData()
     
     func requestAuthorization(completion: @escaping (Bool) -> ()){
         let reads = Set([HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!])
@@ -48,107 +46,85 @@ class HealthKitManager: ObservableObject {
             }
             
         })
-        
-        
     }
     
     func isHealthKitAvaliable() -> Bool {
         return HKHealthStore.isHealthDataAvailable()
     }
     
-    func fetchSleepDataForDay(startDate: Date, endDate: Date){
-        DispatchQueue.main.async {
-            self.sleepData = nil
-        }
+    func fetchSleepDataForDay(startDate: Date, endDate: Date, completion: @escaping (Bool) -> ()){
         guard HKHealthStore.isHealthDataAvailable() else {
             return
         }
         
         let dateRangePredicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
-        // Predicate for all asleep samples (unspecified, core, deep, REM)
-        let allAsleepPredicate = HKCategoryValueSleepAnalysis.predicateForSamples(equalTo: HKCategoryValueSleepAnalysis.allAsleepValues)
         let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: true)
-        //let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [dateRangePredicate, allAsleepPredicate])
         
         let query = HKSampleQuery(sampleType: sleepType, predicate: dateRangePredicate, limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { [self]_,results , error in
             if let error = error{
                 print("Error: \(error.localizedDescription)")
+                completion(false)
                 return
             }
             
             guard let results = results as? [HKCategorySample] else {
+                //return
+                completion(false)
                 return
             }
             
             if results.isEmpty {
+                completion(false)
                 return
             }
-//            
-//                        print("Start Date: \(startDate), End Date: \(endDate)")
-//                        print("Fetched \(results.count) sleep analysis samples.")
-//                        print("Duration \(results.first?.startDate) - \(results.last?.endDate)")
-            
-            var totalInBedTime: TimeInterval = 0
-            var totalASleepTime: TimeInterval = 0
-            var totalAwakeTime: TimeInterval = 0
+          
             DispatchQueue.main.async { [self] in
-                sleepData = SleepData(start: results.first?.startDate, end: results.last?.endDate, sleepQuality: 0, avgHeartRate: 0, allStages: [SleepStage](), sleepStages: [SleepStage](), totalInBedDuration: 0, awakeDuration: 0,  aSleepDuration: 0)
+                sleepData.start = startDate
+                sleepData.end = endDate
             }
             
-            var allStages = [SleepStage]()
-            var sleepStages = [SleepStage]()
-            var inbedTimeIntervals = [DateInterval]()
-            for result in results {
-                //                if let type = HKCategoryValueSleepAnalysis(rawValue: result.value) {
-                //                    if HKCategoryValueSleepAnalysis.allAsleepValues.contains(type) {
-                //                        let sleepDuration = result.endDate.timeIntervalSince(result.startDate)
-                //                        sleepStage.append(SleepStage(duration: sleepDuration,
-                //                                                     start: result.startDate,
-                //                                                     end: result.endDate,
-                //                                                     value: SLEEPSTAGEVALUE(rawValue: result.value) ?? .asleepUnspecified))
-                //                        totalSleepTime += sleepDuration
-                //                    }
-                //                }
-                let sleepDuration = result.endDate.timeIntervalSince(result.startDate)
-                allStages.append(SleepStage(duration: sleepDuration,
-                                            start: result.startDate,
-                                            end: result.endDate,
-                                            value: SLEEPSTAGEVALUE(rawValue: result.value) ?? .asleepUnspecified))
-                
-                if (result.value == SLEEPSTAGEVALUE.asleepCore.rawValue || result.value == SLEEPSTAGEVALUE.asleepDeep.rawValue || result.value == SLEEPSTAGEVALUE.asleepREM.rawValue || result.value == SLEEPSTAGEVALUE.asleepUnspecified.rawValue
-                    || result.value == SLEEPSTAGEVALUE.awake.rawValue) {
-                    let sleepDuration = result.endDate.timeIntervalSince(result.startDate)
-                    totalASleepTime += sleepDuration
-                    
-                    if (result.value == SLEEPSTAGEVALUE.awake.rawValue){
-                        totalAwakeTime += sleepDuration
+            var totalSleepSeconds : TimeInterval = 0
+
+            for sample in results {
+                let value = sample.value
+                let duration = sample.endDate.timeIntervalSince(sample.startDate)
+
+                switch value {
+                case HKCategoryValueSleepAnalysis.asleepREM.rawValue:
+                    totalSleepSeconds += duration
+                    DispatchQueue.main.async { [self] in
+                        sleepData.remSleep.append(SleepStage(type: .REM, duration: duration, start: sample.startDate, end: sample.endDate))
                     }
-                    sleepStages.append(SleepStage(duration: sleepDuration,
-                                                  start: result.startDate,
-                                                  end: result.endDate,
-                                                  value: SLEEPSTAGEVALUE(rawValue: result.value) ?? .asleepUnspecified))
-                    inbedTimeIntervals.append(DateInterval(start: result.startDate, end: result.endDate))
+                case HKCategoryValueSleepAnalysis.asleepCore.rawValue:
+                    totalSleepSeconds += duration
+                    DispatchQueue.main.async { [self] in
+                        sleepData.coreSleep.append(SleepStage(type: .coreSleep, duration: duration, start: sample.startDate, end: sample.endDate))
+                    }
+                case HKCategoryValueSleepAnalysis.asleepDeep.rawValue:
+                    totalSleepSeconds += duration
+                    DispatchQueue.main.async { [self] in
+                        sleepData.deepSleep.append(SleepStage(type: .deepSleep, duration: duration, start: sample.startDate, end: sample.endDate))
+                    }
+                case HKCategoryValueSleepAnalysis.awake.rawValue:
+                    //sleepData.awakeningsCount += 1
+                    DispatchQueue.main.async { [self] in
+                        sleepData.awake.append(SleepStage(type: .awake, duration: duration, start: sample.startDate, end: sample.endDate))
+                    }
+                    
+                default:
+                    break
                 }
-                
-                if (result.value == SLEEPSTAGEVALUE.inBed.rawValue){
-                    inbedTimeIntervals.append(DateInterval(start: result.startDate, end: result.endDate))
-                }
-                
             }
-            
-           
-            totalInBedTime = calculateSpentTime(for: inbedTimeIntervals)
-            let percent = totalASleepTime - totalAwakeTime
-            let sleepQuality = (percent/totalInBedTime) * 100
+
             DispatchQueue.main.async { [self] in
-                sleepData?.allStages = allStages
-                sleepData?.sleepStages = sleepStages
-                sleepData?.totalInBedDuration = totalInBedTime
-                sleepData?.aSleepDuration = totalASleepTime
-                sleepData?.awakeDuration = totalAwakeTime
-                sleepData?.sleepQuality = Int(sleepQuality)
+                sleepData.allSleep.append(contentsOf: sleepData.awake)
+                sleepData.allSleep.append(contentsOf: sleepData.remSleep)
+                sleepData.allSleep.append(contentsOf: sleepData.coreSleep)
+                sleepData.allSleep.append(contentsOf: sleepData.deepSleep)
+                sleepData.totalSleepSeconds = totalSleepSeconds
             }
+            completion(true)
         }
         
         healthStore.execute(query)
