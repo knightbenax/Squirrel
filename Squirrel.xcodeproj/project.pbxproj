@@ -1,0 +1,590 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXContainerItemProxy section */
+		EF7174DB2CC2AB9F005D5407 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF7174BD2CC2AB9E005D5407 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF7174C42CC2AB9E005D5407;
+			remoteInfo = Squirrel;
+		};
+		EF7174E52CC2AB9F005D5407 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = EF7174BD2CC2AB9E005D5407 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = EF7174C42CC2AB9E005D5407;
+			remoteInfo = Squirrel;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		EF7174C52CC2AB9E005D5407 /* Squirrel.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Squirrel.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF7174DA2CC2AB9F005D5407 /* SquirrelTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SquirrelTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		EF7174E42CC2AB9F005D5407 /* SquirrelUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SquirrelUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		EF71751A2CC2F31B005D5407 /* Exceptions for "Squirrel" folder in "Squirrel" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = EF7174C42CC2AB9E005D5407 /* Squirrel */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		EF7174C72CC2AB9E005D5407 /* Squirrel */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				EF71751A2CC2F31B005D5407 /* Exceptions for "Squirrel" folder in "Squirrel" target */,
+			);
+			path = Squirrel;
+			sourceTree = "<group>";
+		};
+		EF7174DD2CC2AB9F005D5407 /* SquirrelTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SquirrelTests;
+			sourceTree = "<group>";
+		};
+		EF7174E72CC2AB9F005D5407 /* SquirrelUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = SquirrelUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EF7174C22CC2AB9E005D5407 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF7174D72CC2AB9F005D5407 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF7174E12CC2AB9F005D5407 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EF7174BC2CC2AB9E005D5407 = {
+			isa = PBXGroup;
+			children = (
+				EF7174C72CC2AB9E005D5407 /* Squirrel */,
+				EF7174DD2CC2AB9F005D5407 /* SquirrelTests */,
+				EF7174E72CC2AB9F005D5407 /* SquirrelUITests */,
+				EF7174C62CC2AB9E005D5407 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EF7174C62CC2AB9E005D5407 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EF7174C52CC2AB9E005D5407 /* Squirrel.app */,
+				EF7174DA2CC2AB9F005D5407 /* SquirrelTests.xctest */,
+				EF7174E42CC2AB9F005D5407 /* SquirrelUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		EF7174C42CC2AB9E005D5407 /* Squirrel */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF7174EE2CC2AB9F005D5407 /* Build configuration list for PBXNativeTarget "Squirrel" */;
+			buildPhases = (
+				EF7174C12CC2AB9E005D5407 /* Sources */,
+				EF7174C22CC2AB9E005D5407 /* Frameworks */,
+				EF7174C32CC2AB9E005D5407 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				EF7174C72CC2AB9E005D5407 /* Squirrel */,
+			);
+			name = Squirrel;
+			packageProductDependencies = (
+			);
+			productName = Squirrel;
+			productReference = EF7174C52CC2AB9E005D5407 /* Squirrel.app */;
+			productType = "com.apple.product-type.application";
+		};
+		EF7174D92CC2AB9F005D5407 /* SquirrelTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF7174F12CC2AB9F005D5407 /* Build configuration list for PBXNativeTarget "SquirrelTests" */;
+			buildPhases = (
+				EF7174D62CC2AB9F005D5407 /* Sources */,
+				EF7174D72CC2AB9F005D5407 /* Frameworks */,
+				EF7174D82CC2AB9F005D5407 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EF7174DC2CC2AB9F005D5407 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				EF7174DD2CC2AB9F005D5407 /* SquirrelTests */,
+			);
+			name = SquirrelTests;
+			packageProductDependencies = (
+			);
+			productName = SquirrelTests;
+			productReference = EF7174DA2CC2AB9F005D5407 /* SquirrelTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		EF7174E32CC2AB9F005D5407 /* SquirrelUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EF7174F42CC2AB9F005D5407 /* Build configuration list for PBXNativeTarget "SquirrelUITests" */;
+			buildPhases = (
+				EF7174E02CC2AB9F005D5407 /* Sources */,
+				EF7174E12CC2AB9F005D5407 /* Frameworks */,
+				EF7174E22CC2AB9F005D5407 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				EF7174E62CC2AB9F005D5407 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				EF7174E72CC2AB9F005D5407 /* SquirrelUITests */,
+			);
+			name = SquirrelUITests;
+			packageProductDependencies = (
+			);
+			productName = SquirrelUITests;
+			productReference = EF7174E42CC2AB9F005D5407 /* SquirrelUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EF7174BD2CC2AB9E005D5407 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					EF7174C42CC2AB9E005D5407 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					EF7174D92CC2AB9F005D5407 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = EF7174C42CC2AB9E005D5407;
+					};
+					EF7174E32CC2AB9F005D5407 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = EF7174C42CC2AB9E005D5407;
+					};
+				};
+			};
+			buildConfigurationList = EF7174C02CC2AB9E005D5407 /* Build configuration list for PBXProject "Squirrel" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = EF7174BC2CC2AB9E005D5407;
+			minimizedProjectReferenceProxies = 1;
+			preferredProjectObjectVersion = 77;
+			productRefGroup = EF7174C62CC2AB9E005D5407 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EF7174C42CC2AB9E005D5407 /* Squirrel */,
+				EF7174D92CC2AB9F005D5407 /* SquirrelTests */,
+				EF7174E32CC2AB9F005D5407 /* SquirrelUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EF7174C32CC2AB9E005D5407 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF7174D82CC2AB9F005D5407 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF7174E22CC2AB9F005D5407 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EF7174C12CC2AB9E005D5407 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF7174D62CC2AB9F005D5407 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		EF7174E02CC2AB9F005D5407 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		EF7174DC2CC2AB9F005D5407 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF7174C42CC2AB9E005D5407 /* Squirrel */;
+			targetProxy = EF7174DB2CC2AB9F005D5407 /* PBXContainerItemProxy */;
+		};
+		EF7174E62CC2AB9F005D5407 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = EF7174C42CC2AB9E005D5407 /* Squirrel */;
+			targetProxy = EF7174E52CC2AB9F005D5407 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		EF7174EC2CC2AB9F005D5407 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		EF7174ED2CC2AB9F005D5407 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		EF7174EF2CC2AB9F005D5407 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Squirrel/Squirrel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Squirrel/Preview Content\"";
+				DEVELOPMENT_TEAM = D5TS66R994;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Squirrel/Info.plist;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Squirrel uses HealthKit to analyze your sleep patterns";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sandy.Squirrel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EF7174F02CC2AB9F005D5407 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = Squirrel/Squirrel.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"Squirrel/Preview Content\"";
+				DEVELOPMENT_TEAM = D5TS66R994;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Squirrel/Info.plist;
+				INFOPLIST_KEY_NSHealthShareUsageDescription = "Squirrel uses HealthKit to analyze your sleep patterns";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sandy.Squirrel;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		EF7174F22CC2AB9F005D5407 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D5TS66R994;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sandy.SquirrelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Squirrel.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Squirrel";
+			};
+			name = Debug;
+		};
+		EF7174F32CC2AB9F005D5407 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D5TS66R994;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sandy.SquirrelTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Squirrel.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/Squirrel";
+			};
+			name = Release;
+		};
+		EF7174F52CC2AB9F005D5407 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D5TS66R994;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sandy.SquirrelUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Squirrel;
+			};
+			name = Debug;
+		};
+		EF7174F62CC2AB9F005D5407 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = D5TS66R994;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.sandy.SquirrelUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = Squirrel;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EF7174C02CC2AB9E005D5407 /* Build configuration list for PBXProject "Squirrel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF7174EC2CC2AB9F005D5407 /* Debug */,
+				EF7174ED2CC2AB9F005D5407 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF7174EE2CC2AB9F005D5407 /* Build configuration list for PBXNativeTarget "Squirrel" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF7174EF2CC2AB9F005D5407 /* Debug */,
+				EF7174F02CC2AB9F005D5407 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF7174F12CC2AB9F005D5407 /* Build configuration list for PBXNativeTarget "SquirrelTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF7174F22CC2AB9F005D5407 /* Debug */,
+				EF7174F32CC2AB9F005D5407 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EF7174F42CC2AB9F005D5407 /* Build configuration list for PBXNativeTarget "SquirrelUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EF7174F52CC2AB9F005D5407 /* Debug */,
+				EF7174F62CC2AB9F005D5407 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EF7174BD2CC2AB9E005D5407 /* Project object */;
+}
