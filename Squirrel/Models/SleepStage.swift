@@ -5,6 +5,7 @@
 //  Created by Bezaleel Ashefor on 2024-10-19.
 //
 import Foundation
+import SwiftUI
 
 enum SleepStageType : String, Codable {
     case awake = "Awake"
@@ -17,6 +18,7 @@ struct SleepStage : Hashable, Identifiable {
     
     var id = UUID().uuidString
     var type : SleepStageType = .awake
+    var color : Color = .blue
     var duration : TimeInterval = 0
     var start : Date?
     var end : Date?

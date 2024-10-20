@@ -11,50 +11,79 @@ import Charts
 struct SleepPanel: View {
     @Binding var sleepData : SleepData
     var dateHelper = DateHelper()
-    var sleepDataHeight : CGFloat = 200
+    var sleepDataHeight : CGFloat = 210
     
     var body: some View {
-        VStack{
+        VStack(spacing: 16){
             VStack(spacing: 6){
                 HStack(alignment: .center, spacing: 5){
                     Image(systemName: "bed.double.fill").font(.system(size: 16)).offset(y: 0.5)
                     Text("Average Time Asleep").font(.custom(FontsManager.fontMedium, size: 14))
                     Spacer()
                 }.opacity(0.8)
-                HStack(alignment: .center, spacing: 5){
-                    Text(dateHelper.getIntervalInHoursMinsFromSeconds(duration: sleepData.totalSleepSeconds)).font(.custom(FontsManager.fontBold, size: 24))
-                    Spacer()
+                VStack(spacing: 1){
+                    HStack(alignment: .center, spacing: 5){
+                        Text(dateHelper.getIntervalInHoursMinsFromSeconds(duration: sleepData.totalSleepSeconds)).font(.custom(FontsManager.fontBold, size: 24))
+                        Spacer()
+                    }
+                    HStack(alignment: .center, spacing: 5){
+                        Text(dateHelper.formatDateToBeauty(thisDate: sleepData.start ?? Date(), type: .PRETTY_STATUS)).font(.custom(FontsManager.fontRegular, size: 13))
+                        Spacer()
+                    }
                 }
             }
             VStack(spacing: 16){
                 GeometryReader { reader in
-                    Chart(sleepData.allSleep) {
-                        BarMark(
-                            xStart: .value("Start Time", $0.start ?? Date()),
-                            xEnd: .value("End Time", $0.end ?? Date()),
-                            y: .value("Job", $0.type.rawValue)
-                        )
-                        //.foregroundStyle(by: .value($0.type.rawValue, $0.type))
-                        .clipShape(RoundedRectangle(cornerRadius: 5))
-                    }.chartXScale(domain: [getDomainStart(), getDomainEnd()])
-                        .chartXAxis {
-                            //make the axis for only even hours spaced at 2hrs apart
-                            AxisMarks(values: .stride(by: .hour, count: 2)) { value in
-                                if let date = value.as(Date.self) {
-                                    let hour = Calendar.current.component(.hour, from: date)
-                                    if hour % 2 == 0 {
-                                        AxisValueLabel(format: .dateTime.hour())
-                                        AxisGridLine()
-                                        AxisTick()
-                                        let _ = print(hour)
-                                    } else {
-                                        AxisValueLabel(format: .dateTime.hour())
-                                        AxisGridLine()
-                                        AxisTick()
+                    ZStack{
+                        Chart(sleepData.allSleep) {
+                            BarMark(
+                                xStart: .value("", $0.start ?? Date()),
+                                xEnd: .value("", $0.end ?? Date()),
+                                y: .value("", $0.type.rawValue)
+                            )
+                            .foregroundStyle($0.color)
+                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                        }.chartXScale(domain: [getDomainStart(), getDomainEnd()])
+                            .chartXAxis {
+                                //make the axis for only even hours spaced at 2hrs apart
+                                AxisMarks(values: .stride(by: .hour, count: 1)) { value in
+                                    if let date = value.as(Date.self) {
+                                        let hour = Calendar.current.component(.hour, from: date)
+                                        if hour % 2 == 0 {
+                                            AxisValueLabel(format: .dateTime.hour())
+                                            AxisGridLine()
+                                            AxisTick()
+                                        }
                                     }
                                 }
                             }
-                        }
+//                        Chart(sleepData.allSleep) { stage in
+//                            LineMark(
+//                                x: .value("Time", stage.time),
+//                                y: .value("Stage", stage.type.rawValue)
+//                            )
+//                            .interpolationMethod(.stepStart)
+//                        }
+    //                    Chart(sleepData.allSleep){
+    //                        RectangleMark(
+    //                            x: .value("", $0.start ?? Date()))
+    //                        .foregroundStyle(.red)
+    //                    }
+//                        HStack{
+//                            
+//                        }.frame(width: reader.size.width, height: sleepDataHeight)
+//                            .background(LinearGradient(gradient: Gradient(colors: [.black, .white]), startPoint: .top, endPoint: .bottom)).reverseMask{
+//                                Chart(sleepData.allSleep) {
+//                                    BarMark(
+//                                        xStart: .value("", $0.start ?? Date()),
+//                                        xEnd: .value("", $0.end ?? Date()),
+//                                        y: .value("", $0.type.rawValue)
+//                                    )
+//                                    .foregroundStyle($0.color)
+//                                    .clipShape(RoundedRectangle(cornerRadius: 5))
+//                                }.chartXScale(domain: [getDomainStart(), getDomainEnd()])
+//                            }
+                    }
                 }.frame(height: sleepDataHeight)
                 HStack{
                     HStack(spacing: 4){
@@ -73,14 +102,33 @@ struct SleepPanel: View {
     }
     
     private func getDomainStart() -> Date {
-        return Calendar.current.date(byAdding: .minute, value: -100, to: sleepData.start ?? Date()) ?? Date()
+        let value = Calendar.current.date(byAdding: .minute, value: -90, to: sleepData.start ?? Date()) ?? Date()
+        print(value)
+        return value
     }
     
     private func getDomainEnd() -> Date {
-        return Calendar.current.date(byAdding: .hour, value: 1, to: sleepData.end ?? Date()) ?? Date()
+        return Calendar.current.date(byAdding: .minute, value: 1, to: sleepData.end ?? Date()) ?? Date()
     }
 }
 
 #Preview {
     SleepPanel(sleepData: .constant(SleepData()))
+}
+
+
+extension View {
+    @inlinable func reverseMask<Mask: View>(
+        alignment: Alignment = .center,
+        @ViewBuilder _ mask: () -> Mask
+    ) -> some View {
+            self.mask(
+                ZStack {
+                    Rectangle()
+
+                    mask()
+                        .blendMode(.destinationOut)
+                }
+            )
+        }
 }

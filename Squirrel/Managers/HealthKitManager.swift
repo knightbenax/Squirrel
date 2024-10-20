@@ -94,22 +94,22 @@ class HealthKitManager: ObservableObject {
                 case HKCategoryValueSleepAnalysis.asleepREM.rawValue:
                     totalSleepSeconds += duration
                     DispatchQueue.main.async { [self] in
-                        sleepData.remSleep.append(SleepStage(type: .REM, duration: duration, start: sample.startDate, end: sample.endDate))
+                        sleepData.remSleep.append(SleepStage(type: .REM, color: .teal, duration: duration, start: sample.startDate, end: sample.endDate))
                     }
                 case HKCategoryValueSleepAnalysis.asleepCore.rawValue:
                     totalSleepSeconds += duration
                     DispatchQueue.main.async { [self] in
-                        sleepData.coreSleep.append(SleepStage(type: .coreSleep, duration: duration, start: sample.startDate, end: sample.endDate))
+                        sleepData.coreSleep.append(SleepStage(type: .coreSleep, color: .blue, duration: duration, start: sample.startDate, end: sample.endDate))
                     }
                 case HKCategoryValueSleepAnalysis.asleepDeep.rawValue:
                     totalSleepSeconds += duration
                     DispatchQueue.main.async { [self] in
-                        sleepData.deepSleep.append(SleepStage(type: .deepSleep, duration: duration, start: sample.startDate, end: sample.endDate))
+                        sleepData.deepSleep.append(SleepStage(type: .deepSleep, color: .purple, duration: duration, start: sample.startDate, end: sample.endDate))
                     }
                 case HKCategoryValueSleepAnalysis.awake.rawValue:
                     //sleepData.awakeningsCount += 1
                     DispatchQueue.main.async { [self] in
-                        sleepData.awake.append(SleepStage(type: .awake, duration: duration, start: sample.startDate, end: sample.endDate))
+                        sleepData.awake.append(SleepStage(type: .awake, color: .orange, duration: duration, start: sample.startDate, end: sample.endDate))
                     }
                     
                 default:
@@ -123,7 +123,10 @@ class HealthKitManager: ObservableObject {
                 sleepData.allSleep.append(contentsOf: sleepData.coreSleep)
                 sleepData.allSleep.append(contentsOf: sleepData.deepSleep)
                 sleepData.totalSleepSeconds = totalSleepSeconds
+                print(sleepData)
             }
+            
+           
             completion(true)
         }
         
