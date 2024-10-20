@@ -22,7 +22,7 @@ struct ContentView: View {
             } else {
                 TopBar(showSettings: $showSettings, reloadSleepData: loadSleepData)
                 if (!loadingSleepData) {
-                    SleepPanel(sleepData: $healthKitManager.sleepData)
+                    SleepPanel(sleepData: $healthKitManager.sleepData, sleepDataForLine: $healthKitManager.sleepDataForLine)
                 } else {
                     Spacer()
                     ProgressView()

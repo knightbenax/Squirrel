@@ -10,6 +10,7 @@ import Charts
 
 struct SleepPanel: View {
     @Binding var sleepData : SleepData
+    @Binding var sleepDataForLine : [SleepDataLine]
     var dateHelper = DateHelper()
     var sleepDataHeight : CGFloat = 210
     
@@ -39,10 +40,30 @@ struct SleepPanel: View {
                             BarMark(
                                 xStart: .value("", $0.start ?? Date()),
                                 xEnd: .value("", $0.end ?? Date()),
-                                y: .value("", $0.type.rawValue)
+                                y: .value("", $0.type.rawValue),
+                                height: 26
                             )
                             .foregroundStyle($0.color)
-                            .clipShape(RoundedRectangle(cornerRadius: 5))
+                            .clipShape(RoundedRectangle(cornerRadius: 4))
+                            
+                            if ($0.type != .deepSleep){
+                                RectangleMark(
+                                    xStart: .value("", ($0.start ?? Date()).addingTimeInterval(-25)),
+                                    xEnd: .value("", ($0.start ?? Date()).addingTimeInterval(15)),
+                                    y: .value("", $0.type.rawValue),
+                                    height: 40
+                                )
+                                .foregroundStyle(.red)
+                                
+                                RectangleMark(
+                                    xStart: .value("", ($0.end ?? Date()).addingTimeInterval(-15)),
+                                    xEnd: .value("", ($0.end ?? Date()).addingTimeInterval(35)),
+                                    y: .value("", $0.type.rawValue),
+                                    height: 40
+                                )
+                                .foregroundStyle(.red)
+                            }
+                
                         }.chartXScale(domain: [getDomainStart(), getDomainEnd()])
                             .chartXAxis {
                                 //make the axis for only even hours spaced at 2hrs apart
@@ -57,32 +78,6 @@ struct SleepPanel: View {
                                     }
                                 }
                             }
-//                        Chart(sleepData.allSleep) { stage in
-//                            LineMark(
-//                                x: .value("Time", stage.time),
-//                                y: .value("Stage", stage.type.rawValue)
-//                            )
-//                            .interpolationMethod(.stepStart)
-//                        }
-    //                    Chart(sleepData.allSleep){
-    //                        RectangleMark(
-    //                            x: .value("", $0.start ?? Date()))
-    //                        .foregroundStyle(.red)
-    //                    }
-//                        HStack{
-//                            
-//                        }.frame(width: reader.size.width, height: sleepDataHeight)
-//                            .background(LinearGradient(gradient: Gradient(colors: [.black, .white]), startPoint: .top, endPoint: .bottom)).reverseMask{
-//                                Chart(sleepData.allSleep) {
-//                                    BarMark(
-//                                        xStart: .value("", $0.start ?? Date()),
-//                                        xEnd: .value("", $0.end ?? Date()),
-//                                        y: .value("", $0.type.rawValue)
-//                                    )
-//                                    .foregroundStyle($0.color)
-//                                    .clipShape(RoundedRectangle(cornerRadius: 5))
-//                                }.chartXScale(domain: [getDomainStart(), getDomainEnd()])
-//                            }
                     }
                 }.frame(height: sleepDataHeight)
                 HStack{
@@ -103,7 +98,6 @@ struct SleepPanel: View {
     
     private func getDomainStart() -> Date {
         let value = Calendar.current.date(byAdding: .minute, value: -90, to: sleepData.start ?? Date()) ?? Date()
-        print(value)
         return value
     }
     
@@ -113,7 +107,7 @@ struct SleepPanel: View {
 }
 
 #Preview {
-    SleepPanel(sleepData: .constant(SleepData()))
+    SleepPanel(sleepData: .constant(SleepData()), sleepDataForLine: .constant([]))
 }
 
 
