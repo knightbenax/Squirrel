@@ -46,23 +46,23 @@ struct SleepPanel: View {
                             .foregroundStyle($0.color)
                             .clipShape(RoundedRectangle(cornerRadius: 4))
                             
-                            if ($0.type != .deepSleep){
-                                RectangleMark(
-                                    xStart: .value("", ($0.start ?? Date()).addingTimeInterval(-25)),
-                                    xEnd: .value("", ($0.start ?? Date()).addingTimeInterval(15)),
-                                    y: .value("", $0.type.rawValue),
-                                    height: 40
-                                )
-                                .foregroundStyle(.red)
-                                
-                                RectangleMark(
-                                    xStart: .value("", ($0.end ?? Date()).addingTimeInterval(-15)),
-                                    xEnd: .value("", ($0.end ?? Date()).addingTimeInterval(35)),
-                                    y: .value("", $0.type.rawValue),
-                                    height: 40
-                                )
-                                .foregroundStyle(.red)
-                            }
+//                            if ($0.type != .deepSleep && $0.type != .awake){
+//                                RectangleMark(
+//                                    xStart: .value("", ($0.start ?? Date()).addingTimeInterval(-25)),
+//                                    xEnd: .value("", ($0.start ?? Date()).addingTimeInterval(15)),
+//                                    y: .value("", $0.type.rawValue),
+//                                    height: 60
+//                                )
+//                                .foregroundStyle(.red)
+//                                
+//                                RectangleMark(
+//                                    xStart: .value("", ($0.end ?? Date()).addingTimeInterval(-15)),
+//                                    xEnd: .value("", ($0.end ?? Date()).addingTimeInterval(35)),
+//                                    y: .value("", $0.type.rawValue),
+//                                    height: 60
+//                                )
+//                                .foregroundStyle(.red)
+//                            }
                 
                         }.chartXScale(domain: [getDomainStart(), getDomainEnd()])
                             .chartXAxis {
