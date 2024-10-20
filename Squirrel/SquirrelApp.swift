@@ -10,10 +10,11 @@ import SwiftUI
 @main
 struct SquirrelApp: App {
     let persistenceController = PersistenceController.shared
-
+    @State var healthKitManager = HealthKitManager()
+    
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(healthKitManager: healthKitManager)
                 .environment(\.managedObjectContext, persistenceController.container.viewContext)
         }
     }

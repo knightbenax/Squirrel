@@ -28,9 +28,9 @@ class HealthKitManager: ObservableObject {
     @Published var weightInKilograms : Double = 0.0
     @Published var heightInMeters : Double = 0.0
     @Published var bodyMassIndex : Double = 0.0
-    @Published var sleepData : SleepData?
     @PublishedAppStorage("hasAskedForPermission") var hasAskedForPermission = false
-    
+    @Published var sleepData = SleepData()
+    @Published var sleepDataForLine = [SleepDataLine]()
     
     func requestAuthorization(completion: @escaping (Bool) -> ()){
         let reads = Set([HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!])
@@ -39,10 +39,7 @@ class HealthKitManager: ObservableObject {
             return
         }
         
-        healthStore.requestAuthorization(toShare: nil, read: reads, completion: { [self] success, error in
-            DispatchQueue.main.async {
-                self.hasAskedForPermission = true
-            }
+        healthStore.requestAuthorization(toShare: nil, read: reads, completion: { success, error in
             if (success){
                 completion(true)
             } else {
@@ -50,138 +47,124 @@ class HealthKitManager: ObservableObject {
             }
             
         })
-        
-        
     }
     
     func isHealthKitAvaliable() -> Bool {
         return HKHealthStore.isHealthDataAvailable()
     }
     
-    func fetchSleepDataForDay(startDate: Date, endDate: Date){
-        DispatchQueue.main.async {
-            self.sleepData = nil
-        }
+    func fetchSleepDataForDay(startDate: Date, endDate: Date, completion: @escaping (Bool) -> ()){
         guard HKHealthStore.isHealthDataAvailable() else {
             return
         }
         
         let dateRangePredicate = HKQuery.predicateForSamples(withStart: startDate, end: endDate, options: .strictStartDate)
-        // Predicate for all asleep samples (unspecified, core, deep, REM)
-        let allAsleepPredicate = HKCategoryValueSleepAnalysis.predicateForSamples(equalTo: HKCategoryValueSleepAnalysis.allAsleepValues)
         let sleepType = HKObjectType.categoryType(forIdentifier: .sleepAnalysis)!
         let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierEndDate, ascending: true)
-        //let predicate = NSCompoundPredicate(andPredicateWithSubpredicates: [dateRangePredicate, allAsleepPredicate])
         
         let query = HKSampleQuery(sampleType: sleepType, predicate: dateRangePredicate, limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { [self]_,results , error in
             if let error = error{
                 print("Error: \(error.localizedDescription)")
+                completion(false)
                 return
             }
             
             guard let results = results as? [HKCategorySample] else {
+                //return
+                completion(false)
                 return
             }
             
             if results.isEmpty {
+                completion(false)
                 return
             }
-//            
-//                        print("Start Date: \(startDate), End Date: \(endDate)")
-//                        print("Fetched \(results.count) sleep analysis samples.")
-//                        print("Duration \(results.first?.startDate) - \(results.last?.endDate)")
-            
-            var totalInBedTime: TimeInterval = 0
-            var totalASleepTime: TimeInterval = 0
-            var totalAwakeTime: TimeInterval = 0
+          
             DispatchQueue.main.async { [self] in
-                sleepData = SleepData(start: results.first?.startDate, end: results.last?.endDate, sleepQuality: 0, avgHeartRate: 0, allStages: [SleepStage](), sleepStages: [SleepStage](), totalInBedDuration: 0, awakeDuration: 0,  aSleepDuration: 0)
+                sleepData.start = results.first?.startDate
+                sleepData.end = results.last?.endDate
             }
             
-            var allStages = [SleepStage]()
-            var sleepStages = [SleepStage]()
-            var inbedTimeIntervals = [DateInterval]()
-            for result in results {
-                //                if let type = HKCategoryValueSleepAnalysis(rawValue: result.value) {
-                //                    if HKCategoryValueSleepAnalysis.allAsleepValues.contains(type) {
-                //                        let sleepDuration = result.endDate.timeIntervalSince(result.startDate)
-                //                        sleepStage.append(SleepStage(duration: sleepDuration,
-                //                                                     start: result.startDate,
-                //                                                     end: result.endDate,
-                //                                                     value: SLEEPSTAGEVALUE(rawValue: result.value) ?? .asleepUnspecified))
-                //                        totalSleepTime += sleepDuration
-                //                    }
-                //                }
-                let sleepDuration = result.endDate.timeIntervalSince(result.startDate)
-                allStages.append(SleepStage(duration: sleepDuration,
-                                            start: result.startDate,
-                                            end: result.endDate,
-                                            value: SLEEPSTAGEVALUE(rawValue: result.value) ?? .asleepUnspecified))
-                
-                if (result.value == SLEEPSTAGEVALUE.asleepCore.rawValue || result.value == SLEEPSTAGEVALUE.asleepDeep.rawValue || result.value == SLEEPSTAGEVALUE.asleepREM.rawValue || result.value == SLEEPSTAGEVALUE.asleepUnspecified.rawValue
-                    || result.value == SLEEPSTAGEVALUE.awake.rawValue) {
-                    let sleepDuration = result.endDate.timeIntervalSince(result.startDate)
-                    totalASleepTime += sleepDuration
-                    
-                    if (result.value == SLEEPSTAGEVALUE.awake.rawValue){
-                        totalAwakeTime += sleepDuration
+            var totalSleepSeconds : TimeInterval = 0
+
+            for sample in results {
+                let value = sample.value
+                let duration = sample.endDate.timeIntervalSince(sample.startDate)
+
+                switch value {
+                case HKCategoryValueSleepAnalysis.asleepREM.rawValue:
+                    totalSleepSeconds += duration
+                    DispatchQueue.main.async { [self] in
+                        sleepData.remSleep.append(SleepStage(type: .REM, color: .teal, duration: duration, start: sample.startDate, end: sample.endDate))
                     }
-                    sleepStages.append(SleepStage(duration: sleepDuration,
-                                                  start: result.startDate,
-                                                  end: result.endDate,
-                                                  value: SLEEPSTAGEVALUE(rawValue: result.value) ?? .asleepUnspecified))
-                    inbedTimeIntervals.append(DateInterval(start: result.startDate, end: result.endDate))
+                case HKCategoryValueSleepAnalysis.asleepCore.rawValue:
+                    totalSleepSeconds += duration
+                    DispatchQueue.main.async { [self] in
+                        sleepData.coreSleep.append(SleepStage(type: .coreSleep, color: .blue, duration: duration, start: sample.startDate, end: sample.endDate))
+                    }
+                case HKCategoryValueSleepAnalysis.asleepDeep.rawValue:
+                    totalSleepSeconds += duration
+                    DispatchQueue.main.async { [self] in
+                        sleepData.deepSleep.append(SleepStage(type: .deepSleep, color: .purple, duration: duration, start: sample.startDate, end: sample.endDate))
+                    }
+                case HKCategoryValueSleepAnalysis.awake.rawValue:
+                    //sleepData.awakeningsCount += 1
+                    DispatchQueue.main.async { [self] in
+                        sleepData.awake.append(SleepStage(type: .awake, color: .orange, duration: duration, start: sample.startDate, end: sample.endDate))
+                    }
+                    
+                default:
+                    break
                 }
-                
-                if (result.value == SLEEPSTAGEVALUE.inBed.rawValue){
-                    inbedTimeIntervals.append(DateInterval(start: result.startDate, end: result.endDate))
-                }
-                
+            }
+
+            DispatchQueue.main.async { [self] in
+                sleepData.allSleep.append(contentsOf: sleepData.awake)
+                sleepData.allSleep.append(contentsOf: sleepData.remSleep)
+                sleepData.allSleep.append(contentsOf: sleepData.coreSleep)
+                sleepData.allSleep.append(contentsOf: sleepData.deepSleep)
+                sleepData.totalSleepSeconds = totalSleepSeconds
+                formatDataForLineChart()
             }
             
            
-            totalInBedTime = calculateSpentTime(for: inbedTimeIntervals)
-            let percent = totalASleepTime - totalAwakeTime
-            let sleepQuality = (percent/totalInBedTime) * 100
-            DispatchQueue.main.async { [self] in
-                sleepData?.allStages = allStages
-                sleepData?.sleepStages = sleepStages
-                sleepData?.totalInBedDuration = totalInBedTime
-                sleepData?.aSleepDuration = totalASleepTime
-                sleepData?.awakeDuration = totalAwakeTime
-                sleepData?.sleepQuality = Int(sleepQuality)
-            }
+            completion(true)
         }
         
         healthStore.execute(query)
     }
     
-    //https://stackoverflow.com/questions/63599928/duration-of-array-of-dateintevals-that-excludes-overlapping-times/63600255#63600255
-    //used to decouple interval timing for inBed analysis
-    func calculateSpentTime(for intervals: [DateInterval]) -> TimeInterval {
-        guard intervals.count > 1 else {
-            return intervals.first?.duration ?? 0
+    
+    private func formatDataForLineChart(){
+        let startTime = Calendar.current.startOfDay(for: sleepData.start ?? Date())
+        
+        // Create sample sleep stages
+        let stages = [
+            ("Awake", 15), ("Core", 10), ("Deep", 30), ("N3", 45),
+            ("Deep", 30), ("REM", 25), ("Deep", 30), ("N3", 40),
+            ("Deep", 25), ("REM", 30), ("Deep", 20), ("Core", 15)
+            ,("Awake", 10)
+        ]
+        
+        // Convert stages into SleepStage objects with timestamps
+        var currentTime = startTime
+        var data: [SleepDataLine] = []
+        
+        for sleepStage in sleepData.allSleep { 
+            let stageValue = SleepDataLine.stageToValue(sleepStage.type.rawValue)
+            data.append(SleepDataLine(time: currentTime, stage: sleepStage.type.rawValue, stageValue: stageValue))
+            let duration = sleepStage.duration
+            currentTime = Calendar.current.date(byAdding: .minute, value: Int(duration), to: currentTime)!
         }
         
-        let sorted = intervals.sorted { $0.start < $1.start }
+//        for (stage, duration) in stages {
+//            let stageValue = SleepDataLine.stageToValue(stage)
+//            data.append(SleepDataLine(time: currentTime, stage: stage, stageValue: stageValue))
+//            currentTime = Calendar.current.date(byAdding: .minute, value: duration, to: currentTime)!
+//        }
         
-        var total: TimeInterval = 0
-        var start = sorted[0].start
-        var end = sorted[0].end
+        self.sleepDataForLine = data
         
-        for i in 1..<sorted.count {
-            
-            if sorted[i].start > end {
-                total += end.timeIntervalSince(start)
-                start = sorted[i].start
-                end = sorted[i].end
-            } else if sorted[i].end > end {
-                end = sorted[i].end
-            }
-        }
-        
-        total += end.timeIntervalSince(start)
-        return total
     }
     
     

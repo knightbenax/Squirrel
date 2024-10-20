@@ -17,7 +17,7 @@ struct PermissionScreen: View {
             Image("Logo").resizable().scaledToFit().frame(width: 220)
             Spacer().frame(height: 20)
             Text("Squirrel needs your permission to access your health data.")
-                .multilineTextAlignment(.center)
+                .multilineTextAlignment(.center).padding(.horizontal, 50)
             Spacer().frame(height: 40)
             HealthKitLinkButton(action: {
                 healthKitManager.requestAuthorization(completion: { result in

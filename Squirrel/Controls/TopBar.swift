@@ -18,11 +18,17 @@ import SwiftUI
 struct TopBar: View {
     @State var headerText = "Hiya"
     @Binding var showSettings : Bool
+    var reloadSleepData : () -> () = {}
     
     var body: some View {
-        HStack(alignment: .center, spacing: 12){
+        HStack(alignment: .center, spacing: 20){
             Text("\(headerText)").contentShape(Rectangle()).font(.custom(FontsManager.fontBlack, size: 28))
             Spacer()
+            Button(action: {
+                reloadSleepData()
+            }){
+                Image(systemName: "arrow.clockwise").foregroundStyle(Color.primary)
+            }
             Button(action: {
                 showSettings.toggle()
             }){

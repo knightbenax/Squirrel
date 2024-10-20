@@ -2,25 +2,26 @@
 //  SleepStage.swift
 //  Squirrel
 //
-//  Created by Bezaleel Ashefor on 2024-10-18.
+//  Created by Bezaleel Ashefor on 2024-10-19.
 //
-
 import Foundation
+import SwiftUI
 
-enum SLEEPSTAGEVALUE : Int {
+enum SleepStageType : String, Codable {
+    case awake = "Awake"
+    case coreSleep = "Core"
+    case deepSleep = "Deep"
+    case REM = "REM"
+}
+
+struct SleepStage : Hashable, Identifiable {
     
-    case inBed = 0
-    case asleepUnspecified = 1
-    case awake = 2
-    case asleepCore = 3
-    case asleepDeep = 4
-    case asleepREM = 5
+    var id = UUID().uuidString
+    var type : SleepStageType = .awake
+    var color : Color = .blue
+    var duration : TimeInterval = 0
+    var start : Date?
+    var end : Date?
     
 }
 
-struct SleepStage : Hashable {
-    var duration : Double
-    var start : Date
-    var end : Date
-    var value : SLEEPSTAGEVALUE
-}
