@@ -2,7 +2,7 @@
 
 Squirrel shows you your last night sleep data as an hypnogram.
  
- [![Platform](/platform.svg)]()
+[![Platform](/platform.svg)]()
 <br><br>
 
 <p float="left">
