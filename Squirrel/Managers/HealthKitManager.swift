@@ -24,7 +24,6 @@ class HealthKitManager: ObservableObject {
     
     var healthStore = HKHealthStore()
     
-    
     @Published var weightInKilograms : Double = 0.0
     @Published var heightInMeters : Double = 0.0
     @Published var bodyMassIndex : Double = 0.0
@@ -108,7 +107,6 @@ class HealthKitManager: ObservableObject {
                         sleepData.deepSleep.append(SleepStage(type: .deepSleep, color: .purple, duration: duration, start: sample.startDate, end: sample.endDate))
                     }
                 case HKCategoryValueSleepAnalysis.awake.rawValue:
-                    //sleepData.awakeningsCount += 1
                     DispatchQueue.main.async { [self] in
                         sleepData.awake.append(SleepStage(type: .awake, color: .orange, duration: duration, start: sample.startDate, end: sample.endDate))
                     }
@@ -124,7 +122,6 @@ class HealthKitManager: ObservableObject {
                 sleepData.allSleep.append(contentsOf: sleepData.coreSleep)
                 sleepData.allSleep.append(contentsOf: sleepData.deepSleep)
                 sleepData.totalSleepSeconds = totalSleepSeconds
-                formatDataForLineChart()
             }
             
            
@@ -132,39 +129,6 @@ class HealthKitManager: ObservableObject {
         }
         
         healthStore.execute(query)
-    }
-    
-    
-    private func formatDataForLineChart(){
-        let startTime = Calendar.current.startOfDay(for: sleepData.start ?? Date())
-        
-        // Create sample sleep stages
-        let stages = [
-            ("Awake", 15), ("Core", 10), ("Deep", 30), ("N3", 45),
-            ("Deep", 30), ("REM", 25), ("Deep", 30), ("N3", 40),
-            ("Deep", 25), ("REM", 30), ("Deep", 20), ("Core", 15)
-            ,("Awake", 10)
-        ]
-        
-        // Convert stages into SleepStage objects with timestamps
-        var currentTime = startTime
-        var data: [SleepDataLine] = []
-        
-        for sleepStage in sleepData.allSleep { 
-            let stageValue = SleepDataLine.stageToValue(sleepStage.type.rawValue)
-            data.append(SleepDataLine(time: currentTime, stage: sleepStage.type.rawValue, stageValue: stageValue))
-            let duration = sleepStage.duration
-            currentTime = Calendar.current.date(byAdding: .minute, value: Int(duration), to: currentTime)!
-        }
-        
-//        for (stage, duration) in stages {
-//            let stageValue = SleepDataLine.stageToValue(stage)
-//            data.append(SleepDataLine(time: currentTime, stage: stage, stageValue: stageValue))
-//            currentTime = Calendar.current.date(byAdding: .minute, value: duration, to: currentTime)!
-//        }
-        
-        self.sleepDataForLine = data
-        
     }
     
     
